@@ -11,7 +11,10 @@ function App() {
   return (
     <div className="App">
       {
-        todoItems.map((item, index) => <TodoItem item={item} key={index} />)
+        todoItems.length > 0 && todoItems.map((item, index) => <TodoItem item={item} key={index} />)
+      }
+      {
+        todoItems.length === 0 && <div>Chưa có công việc được thêm vào</div>
       }
     </div>
   );
