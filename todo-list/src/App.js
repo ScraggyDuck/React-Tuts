@@ -1,23 +1,47 @@
-import React from 'react';
+import React,  {Component} from 'react';
 import './App.css';
 import TodoItem from './components/TodoItem';
 
-function App() {
-  const todoItems = [
-    { title: 'Học bài', isComplete: true},
-    { title: 'Đi xem phim', isComplete: true},
-    { title: 'Làm đồ án', isComplete: false}
-  ];
-  return (
-    <div className="App">
-      {
-        todoItems.length > 0 && todoItems.map((item, index) => <TodoItem item={item} key={index} />)
-      }
-      {
-        todoItems.length === 0 && <div>Chưa có công việc được thêm vào</div>
-      }
-    </div>
-  );
+class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      todoItems: [
+        { title: 'Học bài', isComplete: true},
+        { title: 'Đi xem phim', isComplete: false},
+        { title: 'Làm đồ án', isComplete: false}
+      ]
+    };
+  }
+
+  onItemClick(index) {
+    this.setState({
+       todoItems: this.changedItems(index)
+    });
+  }
+
+  changedItems(index){
+    let length = this.state.todoItems.length;
+    let todoItems = this.state.todoItems;
+    for(let i = 0; i < length; i++)
+      if(i === index)
+        todoItems[i].isComplete = !todoItems[i].isComplete;
+    return todoItems;
+  }
+
+  render(){
+    return (
+      <div className="App">
+        {
+          this.state.todoItems.length > 0 && this.state.todoItems.map((item, index) => 
+            <TodoItem item={item} key={index} onItemClick={() => this.onItemClick(index)}/>)
+        }
+        {
+          this.state.todoItems.length === 0 && <div>Chưa có công việc được thêm vào</div>
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
