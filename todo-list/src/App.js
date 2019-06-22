@@ -14,19 +14,19 @@ class App extends Component {
     };
   }
 
-  onItemClick(index) {
-    this.setState({
-       todoItems: this.changedItems(index)
-    });
-  }
-
-  changedItems(index){
-    let length = this.state.todoItems.length;
-    let todoItems = this.state.todoItems;
-    for(let i = 0; i < length; i++)
-      if(i === index)
-        todoItems[i].isComplete = !todoItems[i].isComplete;
-    return todoItems;
+  onItemClick(item) {
+    return (event) => {
+      const isComplete = item.isComplete;
+      const {todoItems} = this.state;
+      const index = todoItems.indexOf(item);
+      this.setState({
+        todoItems: [
+          ...todoItems.slice(0, index),
+          {...item, isComplete: !isComplete},
+          ...todoItems.slice(index + 1)
+        ]
+      });
+    };
   }
 
   render(){
@@ -34,7 +34,7 @@ class App extends Component {
       <div className="App">
         {
           this.state.todoItems.length > 0 && this.state.todoItems.map((item, index) => 
-            <TodoItem item={item} key={index} onItemClick={() => this.onItemClick(index)}/>)
+            <TodoItem item={item} key={index} onItemClick={this.onItemClick(item)}/>)
         }
         {
           this.state.todoItems.length === 0 && <div>Chưa có công việc được thêm vào</div>
