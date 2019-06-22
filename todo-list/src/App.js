@@ -4,14 +4,14 @@ import TodoItem from './components/TodoItem';
 
 function App() {
   const todoItems = [
-    'Học bài',
-    'Đi xem phim',
-    'Làm đồ án'
+    { title: 'Học bài', isComplete: true},
+    { title: 'Đi xem phim', isComplete: true},
+    { title: 'Làm đồ án', isComplete: false}
   ];
   return (
     <div className="App">
       {
-        todoItems.map((item, index) => <TodoItem title={item} key={index} />)
+        todoItems.map((item, index) => <TodoItem item={item} key={index} />)
       }
     </div>
   );
